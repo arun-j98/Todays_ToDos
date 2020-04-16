@@ -2,6 +2,12 @@
 
 An android app(using flutter framework) which helps you in managing your daily tasks.
 
+## Screenshots
+![](screenshots/notask.png)
+![](screenshots/addtodo.png)
+![](screenshots/delete.png)
+![](screenshots/completed.png)
+![](screenshots/drawer.png)
 ## Getting Started
 
 How to use :-<br />
