@@ -26,6 +26,9 @@ class _NewTodoState extends State<NewTodo> {
   void _setEditingTodo() {
     if (widget.isEditing == true) {
       _todoInputController.text = widget.todo;
+      _todoInputController.selection = TextSelection.fromPosition(
+        TextPosition(offset: _todoInputController.text.length),
+      );
     }
   }
 
@@ -74,6 +77,7 @@ class _NewTodoState extends State<NewTodo> {
               maxLines: 4,
               maxLength: 200,
               controller: _todoInputController,
+              autofocus: true,
             ),
             Divider(),
             FlatButton(

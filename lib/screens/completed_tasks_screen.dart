@@ -22,7 +22,7 @@ class CompletedTasksScreen extends StatelessWidget {
         ),
         iconTheme: IconThemeData(color: Colors.black),
         backgroundColor: Colors.white,
-        elevation: 3,
+        elevation: 0,
       ),
       drawer: AppDrawer(),
       backgroundColor: Colors.white,
