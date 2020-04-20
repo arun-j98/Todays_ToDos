@@ -60,11 +60,12 @@ class TodoProvider with ChangeNotifier {
     var editedTodo = Todo(id: id, todo: newTodo);
     _todos.removeWhere((todo) => todo.id == id);
     _todos.add(editedTodo);
+    DBHelper.edit('remaining_todo', id, newTodo);
     notifyListeners();
   }
 
-  Future<void> fetchAndSetData() async {
-    final dataList = await DBHelper.getData('remaining_todo');
+  Future<void> fetchAndSetData(String table) async {
+    final dataList = await DBHelper.getData(table);
     _todos = dataList.map((todo) {
       return Todo(id: todo['id'], todo: todo['todo']);
     }).toList();

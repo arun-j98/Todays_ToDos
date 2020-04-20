@@ -10,7 +10,6 @@ class CompletedTasksScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final completedTasks = Provider.of<TodoProvider>(context).completedTodos;
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -26,27 +25,38 @@ class CompletedTasksScreen extends StatelessWidget {
       ),
       drawer: AppDrawer(),
       backgroundColor: Colors.white,
-      body: completedTasks.length == 0
-          ? Center(
-            child: Text(
-                'Nothing done today :(',
-                style: TextStyle(
-                  fontSize: 18,
-                  color: Colors.grey,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-          )
-          : Container(
-              height: MediaQuery.of(context).size.height,
-              child: ListView.builder(
-                itemCount: completedTasks.length,
-                itemBuilder: (ctx, index) => TodoCard(
-                  completedTasks[index].todo,
-                  true,
-                ),
-              ),
-            ),
+      body: FutureBuilder(
+        future: Provider.of<TodoProvider>(context)
+            .fetchAndSetData('completed_todo'),
+        builder: (ctx, snapshot) =>
+            snapshot.connectionState == ConnectionState.waiting
+                ? Center(child: CircularProgressIndicator())
+                : Consumer<TodoProvider>(
+                    child: Center(
+                      child: Text(
+                        'Nothing done today :(',
+                        style: TextStyle(
+                          fontSize: 18,
+                          color: Colors.grey,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                    builder: (ctx, todoProvider, ch) =>
+                        todoProvider.completedTodos.length == 0
+                            ? ch
+                            : Container(
+                                height: MediaQuery.of(context).size.height,
+                                child: ListView.builder(
+                                  itemCount: todoProvider.completedTodos.length,
+                                  itemBuilder: (ctx, index) => TodoCard(
+                                    todoProvider.completedTodos[index].todo,
+                                    true,
+                                  ),
+                                ),
+                              ),
+                  ),
+      ),
     );
   }
 }

@@ -10,7 +10,7 @@ class TodoList extends StatelessWidget {
   Widget build(BuildContext context) {
     return FutureBuilder(
       future:
-          Provider.of<TodoProvider>(context, listen: false).fetchAndSetData(),
+          Provider.of<TodoProvider>(context, listen: false).fetchAndSetData('remaining_todo'),
       builder: (ctx, snapshot) => snapshot.connectionState ==
               ConnectionState.waiting
           ? Center(child: CircularProgressIndicator())
